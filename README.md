@@ -1,5 +1,7 @@
 sdl2 (2d) game engine c++
 
+avoid bots, kill them with your projectile gun.
+
 basic framework of a game:
 - Finite state machine for game states (main menu, play state, pause, game over)
 - collision detection for player against world objects, bots, and projectiles
@@ -7,4 +9,4 @@ basic framework of a game:
 - an inventory for the player (with items such as healing potion)
 - resource manager for textures
 - delta timing for movement based on time and not frames
-- my own level parser, which also uses a zmap file to define a height for each texture object, which we can use to create stairs, etc
+- my own level parser, which also uses a zmap file to define a height for each texture object, which we can use to create stairs
