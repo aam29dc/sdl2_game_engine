@@ -1,6 +1,6 @@
 #pragma once
-#ifndef TEXTUREMANAGER_H
-#define TEXTUREMANAGER_H
+#ifndef TEXTUREMANAGER_HPP
+#define TEXTUREMANAGER_HPP
 
 #include <vector>
 #include <string>

@@ -101,8 +101,6 @@ void PlayState::render(SDL_Renderer* renderer) const {
 	_player->drawInventory(renderer, _WIDTH, _HEIGHT);
 
 	if (gameOver) {
-		Game::getInstance()->getGSM()->print();
-
 		Game::getInstance()->getGSM()->popState();
 		Game::getInstance()->getGSM()->pushState(new GameOverState());
 		//gameOverScreen(renderer);

@@ -5,8 +5,6 @@
 #include "gamestate.hpp"
 #include <vector>
 
-#include <iostream>
-
 struct SDL_Renderer;
 
 class GameStateMachine {
@@ -18,7 +16,10 @@ public:
 	void changeState(GameState* state);
 	void popState();
 
-	void print() const;
+	#ifdef DEBUG
+		void print() const;
+	#endif
+
 private:
 	std::vector<GameState*> _gameStates;
 };

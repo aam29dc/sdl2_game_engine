@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SDLGAMEOBJECT_H
-#define SDLGAMEOBJECT_H
+#ifndef SDLGAMEOBJECT_HPP
+#define SDLGAMEOBJECT_HPP
 
 #include "gameobject.hpp"
 #include "texturemanager.hpp"

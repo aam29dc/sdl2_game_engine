@@ -1,6 +1,6 @@
 #pragma once
-#ifndef BUTTON_H
-#define BUTTON_H
+#ifndef BUTTON_HPP
+#define BUTTON_HPP
 
 #include "input.hpp"
 #include "font.hpp"

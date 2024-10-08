@@ -1,6 +1,6 @@
 #pragma once
-#ifndef BOT_H
-#define BOT_H
+#ifndef BOT_HPP
+#define BOT_HPP
 
 #include "sdlgameobject.hpp"
 #include "texturemanager.hpp"

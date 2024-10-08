@@ -1,6 +1,6 @@
 #pragma once
-#ifndef PROJECTILE_H
-#define PROJECTILE_H
+#ifndef PROJECTILE_HPP
+#define PROJECTILE_HPP
 
 #include "sdlgameobject.hpp"
 

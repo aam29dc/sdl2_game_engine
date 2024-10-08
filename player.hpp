@@ -1,6 +1,6 @@
 #pragma once
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 
 #include "sdlgameobject.hpp"
 #include "input.hpp"

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef FONT_H
-#define FONT_H
+#ifndef FONT_HPP
+#define FONT_HPP
 
 #include <SDL_ttf.h>
 #include <string>

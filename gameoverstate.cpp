@@ -8,8 +8,10 @@ void GameOverState::update() {
 	for (int i = 0; i < numButtons; i++) {
 		if (mpos.x >= _button[i]->_posx && mpos.x <= _button[i]->_posx + _button[i]->_width
 			&& mpos.y >= _button[i]->_posy && mpos.y <= _button[i]->_posy + _button[i]->_height) {
+
 			_button[i]->_hover = true;
-			if (Input::getInputHandler()->getMouseButtonState(mouse_buttons::LEFT)) {
+
+			if (Input::getInputHandler()->isMouseKeyReleased(mouse_buttons::LEFT)) {
 				_button[i]->_click = true;
 			}
 			else { _button[i]->_click = false; }

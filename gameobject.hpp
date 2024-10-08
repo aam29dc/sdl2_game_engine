@@ -1,6 +1,6 @@
 #pragma once
-#ifndef GAMEOBJECT_H
-#define GAMEOBJECT_H
+#ifndef GAMEOBJECT_HPP
+#define GAMEOBJECT_HPP
 
 struct SDL_Renderer;
 
