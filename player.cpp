@@ -72,12 +72,11 @@ void Player::attack(const float& dt) {
 	if ((SDL_GetTicks() - _lastFireTime)/1000.0f >= _rof) {
 		proj.push_back(Projectile(dt, pos, size, _angle, PROJ_SIZE, PROJ_SPEED));
 		_lastFireTime = SDL_GetTicks();
+		SoundManager::getInstance()->playSound("sfx_shoot");
 	}
 }
 
-/*
-	Ideally we would get our players input all at once, then process the input to their configured bindings
-*/
+/* Ideally we would get our players input all at once, then process the input to their configured bindings */
 void Player::update(const float& dt, const int& width, const int& height) {
 	move(dt, width, height);
 
@@ -157,6 +156,7 @@ bool Player::useItem(const unsigned int slot) {
 			if (_health < MAXHP) {
 				_health += _bag[slot]->getEffect();
 				if (_health > MAXHP) _health = MAXHP;
+				SoundManager::getInstance()->playSound("sfx_potion");
 			}
 			else return false;
 		}

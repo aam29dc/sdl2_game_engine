@@ -7,6 +7,7 @@
 #include "projectile.hpp"
 #include "time.hpp"
 #include "texturemanager.hpp"
+#include "soundmanager.hpp"
 #include "item.hpp"
 
 #include <array>

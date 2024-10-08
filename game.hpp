@@ -6,11 +6,9 @@
 #include "font.hpp"
 #include "window.hpp"
 #include "time.hpp"
-#include "gameoverstate.hpp"
+
 #include "gamestatemachine.hpp"
 #include "menustate.hpp"
-#include "pausestate.hpp"
-#include "playstate.hpp"
 
 #ifdef DEBUG
 	#include <iostream>

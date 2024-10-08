@@ -21,6 +21,7 @@ void GameStateMachine::changeState(GameState* state) {
 		if (_gameStates.back()->getStateID() == state->getStateID()) {
 			return;
 		}
+
 		if (_gameStates.back()->onExit()) {
 			_gameStates.pop_back();
 		}
@@ -34,5 +35,11 @@ void GameStateMachine::popState() {
 		if (_gameStates.back()->onExit()) {
 			_gameStates.pop_back();
 		}
+	}
+}
+
+void GameStateMachine::print() const {
+	for (int i = 0; i < _gameStates.size(); i++) {
+		std::cout << i << " " << _gameStates[i]->getStateID() << "\n";
 	}
 }

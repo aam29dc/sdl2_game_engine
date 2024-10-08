@@ -25,7 +25,7 @@ extern TTF_Font* font_l;
 extern TTF_Font* font_m;
 extern TTF_Font* font_s;
 
-bool initFont(const std::string& src = "assets/RobotoMono-VariableFont_wght.ttf");
+bool initFont(const std::string& src = "assets/fonts/RobotoMono-VariableFont_wght.ttf");
 
 /* Draws text on screen.
 * \param str text to display

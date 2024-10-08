@@ -7,13 +7,13 @@ TTF_Font* font_l;
 bool initFont(const std::string& src) {
     if (TTF_Init() == -1) return false;
 
-    font_l = TTF_OpenFont("assets/RobotoMono-VariableFont_wght.ttf", int(TEXTSIZE_LARGE));
+    font_l = TTF_OpenFont("assets/fonts/RobotoMono-VariableFont_wght.ttf", int(TEXTSIZE_LARGE));
     if (font_l == NULL) return false;
 
-	font_m = TTF_OpenFont("assets/RobotoMono-VariableFont_wght.ttf", int(TEXTSIZE_MEDIUM));
+	font_m = TTF_OpenFont("assets/fonts/RobotoMono-VariableFont_wght.ttf", int(TEXTSIZE_MEDIUM));
 	if (font_m == NULL) return false;
 
-	font_s = TTF_OpenFont("assets/RobotoMono-VariableFont_wght.ttf", int(TEXTSIZE_SMALL));
+	font_s = TTF_OpenFont("assets/fonts/RobotoMono-VariableFont_wght.ttf", int(TEXTSIZE_SMALL));
 	if (font_s == NULL) return false;
 
     return true;

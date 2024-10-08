@@ -8,6 +8,8 @@
 
 #include "playstate.hpp"
 
+#include "soundmanager.hpp"
+
 #include "game.hpp"
 
 #include <iostream>
@@ -21,18 +23,16 @@ public:
 	bool onExit();
 
 	const std::string& getStateID() const;
-
-
 private:
 	static const std::string _ID;
 
 	static void _MenuToPlay();
-
 	static void _MenuToQuit();
 
 	enum { numButtons = 2 };
-
 	Button* _button[numButtons];
+
+	std::string sfx_click;
 };
 
 #endif

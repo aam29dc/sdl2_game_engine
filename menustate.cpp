@@ -19,6 +19,7 @@ void MenuState::update() {
 
 	for (int i = 0; i < numButtons; i++) {
 		if (_button[i]->_click == true) {
+			SoundManager::getInstance()->playSound(sfx_click);
 			_button[i]->_callback();
 		}
 	}
@@ -41,6 +42,15 @@ bool MenuState::onEnter() {
 	_button[0]->_callback = _MenuToPlay;
 	_button[1]->_callback = _MenuToQuit;
 
+	sfx_click = "click";
+
+	if (SoundManager::getInstance()->load("assets/sounds/click.wav", sfx_click, SOUND_SFX)==false) {
+	#ifdef DEBUG
+		std::cout << "failed to load click.mp3\n";
+	#endif
+		return false;
+	}
+
 	return true;
 }
 
@@ -59,7 +69,6 @@ void MenuState::_MenuToPlay() {
 	Game::getInstance()->getGSM()->changeState(new PlayState());
 }
 
-/* this doesn't close the console window, and doesn't stop it from running */
 void MenuState::_MenuToQuit() {
 	Game::getInstance()->~Game();
 	Window::getInstance()->~Window();

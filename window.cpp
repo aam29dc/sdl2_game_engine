@@ -54,6 +54,13 @@ bool Window::init() {
 			return false;
 		}
 
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+			#ifdef DEBUG
+				std::cout << "SDL_mixer could not initialize! SDL_mixer Error: %s\n" << Mix_GetError() << "\n";
+			#endif
+			return false;
+		}
+
 		loadingScreen();
 
 		//SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD);

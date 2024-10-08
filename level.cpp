@@ -16,7 +16,7 @@ const std::vector<SDLGameObject>& Level::getObjects() const {
 /*	.lvl and .zmap files are Common Seperated Values (CSV) files */
 bool Level::load(SDL_Renderer* renderer, const std::string& lvl, const std::string& image, const std::string& zmap) {
 	//load level texture
-	if (!TextureManager::getInstance()->load(renderer, _textureID, "assets/blocks_24.bmp")) return false;
+	if (!TextureManager::getInstance()->load(renderer, _textureID, "assets/textures/blocks_24.bmp")) return false;
 
 	//parse level for objects
 	std::ifstream level(lvl);

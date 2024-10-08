@@ -40,6 +40,7 @@ void Bot::update(const float& dt, const std::array<float, 2>& ppos) {
 bool Bot::attack() {
 	if ((SDL_GetTicks() - _lastFireTime) / 1000.0f >= _rof) {
 		_lastFireTime = SDL_GetTicks();
+		SoundManager::getInstance()->playSound("sfx_melee");
 		return true;
 	}
 	return false;

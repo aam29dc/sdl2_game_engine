@@ -10,8 +10,10 @@
 #include "itemobject.hpp"
 
 #include "texturemanager.hpp"
+#include "soundmanager.hpp"
 
 #include "pausestate.hpp"
+#include "gameoverstate.hpp"
 #include "game.hpp"
 
 #include <SDL.h>
@@ -62,7 +64,7 @@ private:
 	Player* _player;
 	Level* _level;
 	std::vector<Bot> _bot;
-	const size_t numBots = 0;
+	const size_t numBots = 3;
 	int _score;						//server tracks player scores
 
 	float _cameraX;
@@ -71,6 +73,10 @@ private:
 	size_t _blocksID, _bgID;		// texure ids
 
 	float _scrollX;					//background scroll effect
+
+	std::string sfx_shoot;
+	std::string sfx_melee;
+	std::string sfx_potion;
 
 	ItemObject yeppers;
 

@@ -17,7 +17,7 @@ void PlayState::update() {
 	//update entities
 	_player->update(Time::getTime()->_dt, _WIDTH, _HEIGHT);
 
-	for (size_t i = 0; i < numBots; i++) {
+	for (size_t i = 0; i < _bot.size(); i++) {
 		_bot.at(i).update(Time::getTime()->_dt, _player->pos);
 
 		//bot attacks player if in range
@@ -66,7 +66,7 @@ void PlayState::update() {
 		_player->proj.at(i).pos[1] += _player->proj.at(i).velocity[1];
 	}
 
-	for (size_t i = 0; i < numBots; i++) {
+	for (size_t i = 0; i < _bot.size(); i++) {
 		_bot.at(i).pos[0] += _bot.at(i).velocity[0];
 		_bot.at(i).pos[1] += _bot.at(i).velocity[1];
 	}
@@ -90,7 +90,7 @@ void PlayState::render(SDL_Renderer* renderer) const {
 	_player->draw(renderer);
 	yeppers.draw(renderer);
 	
-	for (size_t i = 0; i < numBots; i++) {
+	for (size_t i = 0; i < _bot.size(); i++) {
 		_bot.at(i).draw(renderer, _cameraX, _cameraY);
 	}
 
@@ -101,13 +101,15 @@ void PlayState::render(SDL_Renderer* renderer) const {
 	_player->drawInventory(renderer, _WIDTH, _HEIGHT);
 
 	if (gameOver) {
-		gameOverScreen(renderer);
+		Game::getInstance()->getGSM()->print();
+
+		Game::getInstance()->getGSM()->popState();
+		Game::getInstance()->getGSM()->pushState(new GameOverState());
+		//gameOverScreen(renderer);
 	}
 }
 
 bool PlayState::onEnter() {
-	std::cout << "Play enter.\n";
-
 	_cameraX = 0.0f;
 	_cameraY = 0.0f;
 
@@ -136,47 +138,47 @@ bool PlayState::onEnter() {
 	SDL_Surface* temp = 0;
 
 	//load level
-	_level->load(Window::getInstance()->_renderer, "assets/level.lvl", "assets/blocks_24.bmp", "assets/blocks_24.zmap");
+	_level->load(Window::getInstance()->_renderer, "assets/levels/level.lvl", "assets/textures/blocks_24.bmp", "assets/zmaps/blocks_24.zmap");
 
 	// Load Textures	// (we could use a basic texture for textureID = 0 for safety)
 		//load background texture
-	if (!TextureManager::getInstance()->load(Window::getInstance()->_renderer, _bgID, "assets/bg.bmp")) {
+	if (!TextureManager::getInstance()->load(Window::getInstance()->_renderer, _bgID, "assets/textures/bg.bmp")) {
 		#ifdef DEBUG
-			std::cout << "assets/bg.bmp failed.\n";
+			std::cout << "assets/textures/bg.bmp failed.\n";
 		#endif
 		return false;
 	}
 
 	//load player texture
-	if (!TextureManager::getInstance()->load(Window::getInstance()->_renderer, _player->textureID, "assets/user.bmp")) {
+	if (!TextureManager::getInstance()->load(Window::getInstance()->_renderer, _player->textureID, "assets/textures/user.bmp")) {
 		#ifdef DEBUG
-			std::cout << "assets/user.bmp failed.\n";
+			std::cout << "assets/textures/user.bmp failed.\n";
 		#endif
 		return false;
 	}
 
 	//load bot texture
 	if (numBots > 0) {
-		if (!TextureManager::getInstance()->load(Window::getInstance()->_renderer, _bot.at(0).textureID, "assets/bot.bmp")) {
+		if (!TextureManager::getInstance()->load(Window::getInstance()->_renderer, _bot.at(0).textureID, "assets/textures/bot.bmp")) {
 			#ifdef DEBUG
-				std::cout << "assets/bot.bmp failed.\n";
+				std::cout << "assets/textures/bot.bmp failed.\n";
 			#endif
 			return false;
 		}
 	}
 
 	//load textures for pickup Items
-	if (!TextureManager::getInstance()->load(Window::getInstance()->_renderer, yeppers.textureID, "assets/potion_pickup.png")) {
+	if (!TextureManager::getInstance()->load(Window::getInstance()->_renderer, yeppers.textureID, "assets/textures/potion_pickup.png")) {
 		#ifdef DEBUG
-			std::cout << "assets/potion_pickup.png failed.\n";
+			std::cout << "assets/textures/potion_pickup.png failed.\n";
 		#endif
 		return false;
 	}
 
 	//load textures for Inventory items
-	if (!TextureManager::getInstance()->load(Window::getInstance()->_renderer, healPotion.getTextureID(), "assets/potion.bmp")) {
+	if (!TextureManager::getInstance()->load(Window::getInstance()->_renderer, healPotion.getTextureID(), "assets/textures/potion.bmp")) {
 		#ifdef DEBUG
-			std::cout << "assets/potion.bmp failed.\n";
+			std::cout << "assets/textures/potion.bmp failed.\n";
 		#endif
 		return false;
 	}
@@ -187,6 +189,15 @@ bool PlayState::onEnter() {
 	}
 
 	SDL_FreeSurface(temp);
+
+	/* we load the required sounds for each state */
+	//load sounds
+	sfx_shoot = "sfx_shoot";
+	sfx_melee = "sfx_melee";
+	sfx_potion = "sfx_potion";
+	SoundManager::getInstance()->load("assets/sounds/shoot.wav", sfx_shoot, SOUND_SFX);
+	SoundManager::getInstance()->load("assets/sounds/melee.wav", sfx_melee, SOUND_SFX);
+	SoundManager::getInstance()->load("assets/sounds/potion_use.wav", sfx_potion, SOUND_SFX);
 
 	//give player items in their inventory
 	_player->pickup(&healPotion);
@@ -308,7 +319,7 @@ void PlayState::_checkPlayerCollisions(const SDL_FRect& pos, SDL_FRect& bpos) {
 
 		/*if player velocity is 0, or was set to zero from previous loop, then we should be able to skip all checks afterwards*/
 		//player collision w/ other bots
-		for (size_t i = 0; i < numBots; i++) {
+		for (size_t i = 0; i < _bot.size(); i++) {
 
 			bpos.x = _bot.at(i).pos[0] + _bot.at(i).velocity[0];
 			bpos.y = _bot.at(i).pos[1] + _bot.at(i).velocity[1];
@@ -346,7 +357,7 @@ void PlayState::_checkPlayerProjectileCollisions(SDL_FRect& pos, SDL_FRect& bpos
 			}
 			/*if projectile collided, or was set to zero from previous loop, then we should be able to skip all checks afterwards*/
 			//player projectiles collision w/ bots
-			for (size_t j = 0; j < numBots; j++) {
+			for (size_t j = 0; j < _bot.size(); j++) {
 				bpos = { _bot.at(j).pos[0] + _bot.at(j).velocity[0], _bot.at(j).pos[1] + _bot.at(j).velocity[1], SDLGameObject::SIZE, SDLGameObject::SIZE };
 				if (rectsIntersect(pos, bpos)) {
 					_player->proj.at(i).collided = true;	//^ so we store a bool value instead
@@ -358,6 +369,7 @@ void PlayState::_checkPlayerProjectileCollisions(SDL_FRect& pos, SDL_FRect& bpos
 	}
 }
 
+/* Doesn't check if bot collides with solid objects */
 void PlayState::_checkBotCollisions() {
 	SDL_FRect pos = { 0,0, SDLGameObject::SIZE, SDLGameObject::SIZE };
 	SDL_FRect bpos = { 0, 0, SDLGameObject::SIZE, SDLGameObject::SIZE };
@@ -365,11 +377,11 @@ void PlayState::_checkBotCollisions() {
 	// we don't check collision with bounds with world b.c they simply move towards the player
 	// checks collision w/ other bots, not itself, and not previous bots already checked, 2d loop
 	// ... keeping in mind the last bot in the list isn't checked against other bots, and therefore it's velocity won't change
-	for (size_t i = 0; i < numBots; i++) {
+	for (size_t i = 0; i < _bot.size(); i++) {
 
 		pos = { _bot.at(i).pos[0] + _bot.at(i).velocity[0], _bot.at(i).pos[1] + _bot.at(i).velocity[1] };
 
-		for (size_t j = i + 1; j < numBots; j++) {
+		for (size_t j = i + 1; j < _bot.size(); j++) {
 
 			bpos = { _bot.at(j).pos[0] + _bot.at(j).velocity[0], _bot.at(j).pos[1] + _bot.at(j).velocity[1] };
 

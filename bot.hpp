@@ -4,6 +4,7 @@
 
 #include "sdlgameobject.hpp"
 #include "texturemanager.hpp"
+#include "soundmanager.hpp"
 #include <SDL.h>
 
 class Bot : public SDLGameObject {
