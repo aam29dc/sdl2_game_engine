@@ -14,3 +14,4 @@ Core focus is functionality, and game design patterns; not creating an actual ga
 
 TODO:
 - command pattern for inputs and customizable key bind configuration
+- save / load file
