@@ -1,7 +1,7 @@
 # sdl2 (2d) game engine c++
 
 Avoid bots, kill them with your projectile gun. Top-down 2d view.
-This project is focused on functionality, rather than creating an actual game, no fancy art work, more focused on coding/theory side.
+Core focus on functionality, rather than creating an actual game, no fancy art work, etc.
 
 Framework of a game:
 - Finite state machine for game states (main menu, play state, pause, game over)
